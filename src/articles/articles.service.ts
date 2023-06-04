@@ -42,9 +42,11 @@ export class ArticlesService {
   async findForList(
     request: FindAllArticleRequest
   ): Promise<PaginationResponse<FindForListResponse>> {
+    const newRequest = { ...request, status: "PUBLIC" };
+
     return this.ArticleModel.aggregate(
       buildPaginationPipeline<FindAllArticleRequest, ExtendBase<Article>>(
-        request,
+        newRequest,
         [
           "title",
           "introduction",

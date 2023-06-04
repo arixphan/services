@@ -3,4 +3,5 @@ export class UpdateArticleDto {
   readonly categories: string[];
   readonly content: string;
   readonly introduction: string;
+  readonly status: string;
 }

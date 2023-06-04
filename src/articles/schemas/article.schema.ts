@@ -27,6 +27,11 @@ export class Article {
     required: true,
   })
   site: string;
+
+  @Prop({
+    required: true,
+  })
+  status: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
