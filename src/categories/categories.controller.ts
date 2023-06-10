@@ -16,9 +16,9 @@ import { Category } from "./schemas/category.schema";
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
   @Post()
-  async create(@Body() createCatDto: CreateCategoriesDto) {
+  async create(@Body() createCategoriesDto: CreateCategoriesDto) {
     try {
-      return await this.categoriesService.create(createCatDto);
+      return await this.categoriesService.create(createCategoriesDto);
     } catch (error) {
       throw new HttpException("Please check request", HttpStatus.BAD_REQUEST);
     }

@@ -17,7 +17,7 @@ export class CategoriesService {
       newCategory.name = category;
       newCategories.push(newCategory);
     });
-
+    console.log("newCategories", newCategories);
     return await this.categoryModel.create(newCategories);
   }
 

@@ -8,15 +8,38 @@ import { buildPaginationPipeline } from "src/utils/query";
 import { ExtendBase, PaginationResponse } from "src/types";
 import { UpdateArticleDto } from "./dto/update-post.dto";
 import { FindForListResponse } from "./response/FindForListResponse";
+import { convertArticlePath } from "src/utils/url";
+import { CategoriesService } from "src/categories/categories.service";
+import { CreateCategoriesDto } from "src/categories/dto/create-category.dto";
 
 @Injectable()
 export class ArticlesService {
   constructor(
-    @InjectModel(Article.name) private readonly ArticleModel: Model<Article>
+    @InjectModel(Article.name) private readonly ArticleModel: Model<Article>,
+    private readonly categoriesService: CategoriesService
   ) {}
+
+  async createNewCategories(articleCategories: string[]) {
+    if (articleCategories.length === 0) return;
+    const allCategories = await this.categoriesService.findAll();
+    const categoriesMap = allCategories.reduce((mapping, cate) => {
+      mapping[cate.name] = true;
+      return mapping;
+    }, {});
+    const filteredNewCategories = articleCategories.filter(
+      (category) => !categoriesMap[category]
+    );
+
+    if (filteredNewCategories.length > 0) {
+      await this.categoriesService.create(
+        new CreateCategoriesDto(filteredNewCategories)
+      );
+    }
+  }
 
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     const createdArticle = await this.ArticleModel.create(createArticleDto);
+    this.createNewCategories(createdArticle.categories);
     return createdArticle;
   }
 
@@ -24,6 +47,7 @@ export class ArticlesService {
     id: string,
     updateArticleDto: UpdateArticleDto
   ): Promise<Article> {
+    this.createNewCategories(updateArticleDto.categories);
     return this.ArticleModel.findByIdAndUpdate(id, updateArticleDto);
   }
 
@@ -64,6 +88,12 @@ export class ArticlesService {
         data: result?.data || [],
         total: result?.total?.[0]?.total || 0,
       }));
+  }
+
+  async getArticleUrls(): Promise<string[]> {
+    return (await this.ArticleModel.find()).map((item) => {
+      return convertArticlePath(item.title, item.id);
+    });
   }
 
   async findOne(id: string): Promise<Article> {

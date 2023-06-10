@@ -23,7 +23,6 @@ export const buildQuery = <T>(fields: Partial<T>, search?: string) => {
       $search: search,
     };
   }
-
   return query;
 };
 

@@ -25,7 +25,6 @@ export class ArticlesController {
     try {
       return await this.articlesService.create(createArticleDto);
     } catch (error) {
-      console.log("error", error);
       throw new HttpException("Please check request", HttpStatus.BAD_REQUEST);
     }
   }
@@ -51,6 +50,10 @@ export class ArticlesController {
     @Query() request: FindAllArticleRequest
   ): Promise<PaginationResponse<FindForListResponse>> {
     return this.articlesService.findForList(request);
+  }
+  @Get("urls")
+  async getUrls(): Promise<string[]> {
+    return this.articlesService.getArticleUrls();
   }
   @Get(":id")
   async findOne(@Param("id") id: string): Promise<Article> {
