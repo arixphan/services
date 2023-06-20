@@ -16,6 +16,7 @@ import { FindAllArticleRequest } from "./request/find-all-article-request.dto";
 import { PaginationResponse } from "src/types";
 import { UpdateArticleDto } from "./dto/update-post.dto";
 import { FindForListResponse } from "./response/FindForListResponse";
+import { UpdateArticleStatusDto } from "./dto/update-article-status.dto";
 
 @Controller("articles")
 export class ArticlesController {
@@ -35,6 +36,21 @@ export class ArticlesController {
   ) {
     try {
       return await this.articlesService.update(id, updateArticleDto);
+    } catch (error) {
+      throw new HttpException("Please check request", HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Post(":id/status")
+  async updateStatus(
+    @Param("id") id: string,
+    @Body() updateArticleDto: UpdateArticleStatusDto
+  ) {
+    try {
+      return await this.articlesService.updateStatus(
+        id,
+        updateArticleDto.status
+      );
     } catch (error) {
       throw new HttpException("Please check request", HttpStatus.BAD_REQUEST);
     }

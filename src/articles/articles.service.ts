@@ -51,6 +51,10 @@ export class ArticlesService {
     return this.ArticleModel.findByIdAndUpdate(id, updateArticleDto);
   }
 
+  async updateStatus(id: string, status: string) {
+    return this.ArticleModel.findByIdAndUpdate(id, { status });
+  }
+
   async findAll(
     request: FindAllArticleRequest
   ): Promise<PaginationResponse<Article>> {
@@ -91,7 +95,7 @@ export class ArticlesService {
   }
 
   async getArticleUrls(): Promise<string[]> {
-    return (await this.ArticleModel.find()).map((item) => {
+    return (await this.ArticleModel.find({ status: "PUBLIC" })).map((item) => {
       return convertArticlePath(item.title, item.id);
     });
   }
