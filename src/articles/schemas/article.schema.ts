@@ -32,6 +32,12 @@ export class Article {
     required: true,
   })
   status: string;
+
+  @Prop()
+  publishedDate: Date;
+
+  @Prop()
+  coverImageUrl: string;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

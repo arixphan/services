@@ -52,7 +52,11 @@ export class ArticlesService {
   }
 
   async updateStatus(id: string, status: string) {
-    return this.ArticleModel.findByIdAndUpdate(id, { status });
+    const updatedData: Partial<Article> = { status };
+    if (status === "PUBLIC") {
+      updatedData.publishedDate = new Date();
+    }
+    return this.ArticleModel.findByIdAndUpdate(id, updatedData);
   }
 
   async findAll(
@@ -83,6 +87,7 @@ export class ArticlesService {
           "_id",
           "createdAt",
           "updatedAt",
+          "publishedDate",
         ]
       )
     )

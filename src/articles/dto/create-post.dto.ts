@@ -4,4 +4,5 @@ export class CreateArticleDto {
   readonly content: string;
   readonly introduction: string;
   readonly status: string;
+  readonly coverImageUrl: string;
 }

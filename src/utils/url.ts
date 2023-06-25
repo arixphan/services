@@ -33,7 +33,10 @@ export function removeVietnameseTones(str: string) {
 const delimiter = "-";
 
 export const convertArticlePath = (articleTitle: string, id: string) => {
-  const title = removeVietnameseTones(articleTitle).replace(/\s/g, delimiter);
+  const title = removeVietnameseTones(articleTitle)
+    .replace(/\s\s+/g, " ")
+    .replace(/\s/g, delimiter)
+    .toLowerCase();
   return `${title}${delimiter}${id}`;
 };
 
