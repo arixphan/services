@@ -38,6 +38,9 @@ export class Article {
 
   @Prop()
   coverImageUrl: string;
+
+  @Prop()
+  contentTree: Array<any>;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

@@ -5,4 +5,5 @@ export class UpdateArticleDto {
   readonly introduction: string;
   readonly status: string;
   readonly coverImageUrl: string;
+  readonly contentTree: Array<any>;
 }
