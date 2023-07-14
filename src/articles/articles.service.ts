@@ -82,9 +82,6 @@ export class ArticlesService {
         [
           "title",
           "introduction",
-          "site",
-          "categories",
-          "references",
           "_id",
           "createdAt",
           "updatedAt",
