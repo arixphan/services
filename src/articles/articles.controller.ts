@@ -71,6 +71,11 @@ export class ArticlesController {
   async getUrls(): Promise<string[]> {
     return this.articlesService.getArticleUrls();
   }
+
+  @Get("references")
+  async getArticleTitleAndLink(): Promise<Record<any, any>[]> {
+    return this.articlesService.getArticleTitleAndLink();
+  }
   @Get(":id")
   async findOne(@Param("id") id: string): Promise<Article> {
     return this.articlesService.findOne(id);

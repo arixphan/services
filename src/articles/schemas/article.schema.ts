@@ -41,6 +41,9 @@ export class Article {
 
   @Prop()
   contentTree: Array<any>;
+
+  @Prop()
+  references: Array<string>;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

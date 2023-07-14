@@ -84,6 +84,7 @@ export class ArticlesService {
           "introduction",
           "site",
           "categories",
+          "references",
           "_id",
           "createdAt",
           "updatedAt",
@@ -102,6 +103,15 @@ export class ArticlesService {
   async getArticleUrls(): Promise<string[]> {
     return (await this.ArticleModel.find({ status: "PUBLIC" })).map((item) => {
       return convertArticlePath(item.title, item.id);
+    });
+  }
+
+  async getArticleTitleAndLink(): Promise<Record<any, any>[]> {
+    return (await this.ArticleModel.find({ status: "PUBLIC" })).map((item) => {
+      return {
+        link: convertArticlePath(item.title, item.id),
+        title: item.title,
+      };
     });
   }
 

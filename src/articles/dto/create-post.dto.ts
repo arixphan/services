@@ -6,4 +6,5 @@ export class CreateArticleDto {
   readonly status: string;
   readonly coverImageUrl: string;
   readonly contentTree: Array<any>;
+  readonly references: Array<string>;
 }
